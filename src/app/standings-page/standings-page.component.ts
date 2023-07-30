@@ -24,11 +24,15 @@ export class StandingsPageComponent implements OnInit {
 								division: string;
 								teamRecords: TeamRecord[];
 							}[],
-							[key, value]
+							[division, teamRecords]
 						) => {
+							const teamRecordsWithPythagoras = teamRecords.map(
+								d => this.calculatePythagoreanExpectation(d)
+							);
+							console.log(teamRecordsWithPythagoras);
 							acc.push({
-								division: key,
-								teamRecords: value,
+								division,
+								teamRecords,
 							});
 							return acc;
 						},
@@ -38,5 +42,29 @@ export class StandingsPageComponent implements OnInit {
 				take(1)
 			)
 			.subscribe();
+	}
+
+	private calculatePythagoreanExpectation(
+		teamRecord: TeamRecord
+	): TeamRecord & {
+		pythagoreanWins: number;
+		pythagoreanLosses: number;
+		pythagoreanPct: string;
+	} {
+		const gamesPlayed = teamRecord.gamesPlayed;
+		const runDifferential = Math.pow(
+			teamRecord.runsAllowed / teamRecord.runsScored,
+			2
+		);
+		const pythagoreanPct = 1 / (1 + runDifferential);
+		const pythagoreanWins = Math.round(pythagoreanPct * gamesPlayed);
+		const pythagoreanLosses = Math.round(gamesPlayed - pythagoreanWins);
+
+		return {
+			...teamRecord,
+			pythagoreanWins,
+			pythagoreanLosses,
+			pythagoreanPct: pythagoreanPct.toPrecision(3),
+		};
 	}
 }
