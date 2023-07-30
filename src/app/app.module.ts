@@ -6,6 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatCardModule } from '@angular/material/card';
 import { HttpClientModule } from '@angular/common/http';
+import { MatTableModule } from '@angular/material/table';
 
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -26,6 +27,7 @@ import { StandingsService } from './services/standings.service';
 		MatButtonModule,
 		MatProgressBarModule,
 		HttpClientModule,
+		MatTableModule,
 	],
 	providers: [StandingsService],
 	bootstrap: [StandingsPageComponent, HeaderComponent, FooterComponent],

@@ -1,16 +1,49 @@
 <div class="container responsive-grid">
 	<mat-card *ngFor="let point of data">
 		<mat-card-header>
-			<mat-card-title> {{ point.division }} </mat-card-title>
+			<mat-card-title>
+				{{ point.division }}
+			</mat-card-title>
 		</mat-card-header>
-		<br />
-		<mat-card-content *ngFor="let records of point.teamRecords">
+		<mat-card-content>
 			<br />
-			<p>{{ records.team.name }}</p>
+			<table
+				mat-table
+				[dataSource]="point.teamRecords"
+				class="mat-elevation-z8">
+				<ng-container matColumnDef="team">
+					<th mat-header-cell *matHeaderCellDef>Team</th>
+					<td mat-cell *matCellDef="let element">
+						{{ element.team.name }}
+					</td>
+				</ng-container>
+				<ng-container matColumnDef="pyWins">
+					<th mat-header-cell *matHeaderCellDef>Py Wins</th>
+					<td mat-cell *matCellDef="let element">
+						{{ element.pythagoreanWins }}
+					</td>
+				</ng-container>
+				<ng-container matColumnDef="pyLosses">
+					<th mat-header-cell *matHeaderCellDef>Py Losses</th>
+					<td mat-cell *matCellDef="let element">
+						{{ element.pythagoreanLosses }}
+					</td>
+				</ng-container>
+				<ng-container matColumnDef="pyPct">
+					<th mat-header-cell *matHeaderCellDef>Py Pct</th>
+					<td mat-cell *matCellDef="let element">
+						{{ element.pythagoreanPct }}
+					</td>
+				</ng-container>
+				<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+				<tr
+					mat-row
+					*matRowDef="let row; columns: displayedColumns"></tr>
+			</table>
 		</mat-card-content>
-		<mat-card-actions>
+		<!-- <mat-card-actions>
 			<button mat-button>LIKE</button>
 			<button mat-button>SHARE</button>
-		</mat-card-actions>
+		</mat-card-actions> -->
 	</mat-card>
 </div>

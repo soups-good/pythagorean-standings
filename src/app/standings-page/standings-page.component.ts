@@ -9,7 +9,16 @@ import { TeamRecord } from '../models/standings-data.model';
 	styleUrls: ['./standings-page.component.scss'],
 })
 export class StandingsPageComponent implements OnInit {
-	data: { division: string; teamRecords: TeamRecord[] }[] = [];
+	data: {
+		division: string;
+		teamRecords: (TeamRecord & {
+			pythagoreanWins: number;
+			pythagoreanLosses: number;
+			pythagoreanPct: string;
+		})[];
+	}[] = [];
+
+	displayedColumns: string[] = ['team', 'pyWins', 'pyLosses', 'pyPct'];
 
 	public constructor(private standingsService: StandingsService) {}
 
@@ -22,17 +31,23 @@ export class StandingsPageComponent implements OnInit {
 						(
 							acc: {
 								division: string;
-								teamRecords: TeamRecord[];
+								teamRecords: (TeamRecord & {
+									pythagoreanWins: number;
+									pythagoreanLosses: number;
+									pythagoreanPct: string;
+								})[];
 							}[],
 							[division, teamRecords]
 						) => {
 							const teamRecordsWithPythagoras = teamRecords.map(
 								d => this.calculatePythagoreanExpectation(d)
 							);
-							console.log(teamRecordsWithPythagoras);
 							acc.push({
 								division,
-								teamRecords,
+								teamRecords: teamRecordsWithPythagoras.sort(
+									(a, b) =>
+										+b.pythagoreanPct - +a.pythagoreanPct
+								),
 							});
 							return acc;
 						},

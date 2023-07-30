@@ -33,7 +33,7 @@ export class StandingsService {
 	public getStandingsByDivision(): Observable<Record<string, TeamRecord[]>> {
 		return this.getStandings().pipe(
 			map(standings => {
-				const test = standings.records.reduce((topAcc, topCurr) => {
+				return standings.records.reduce((topAcc, topCurr) => {
 					const insideReduce = topCurr.teamRecords.reduce(
 						(acc: Record<string, TeamRecord[]>, curr) => {
 							if (
@@ -54,7 +54,6 @@ export class StandingsService {
 						...insideReduce,
 					};
 				}, {});
-				return test;
 			})
 		);
 	}
