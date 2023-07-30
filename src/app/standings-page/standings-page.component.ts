@@ -18,7 +18,15 @@ export class StandingsPageComponent implements OnInit {
 		})[];
 	}[] = [];
 
-	displayedColumns: string[] = ['team', 'pyWins', 'pyLosses', 'pyPct'];
+	displayedColumns: string[] = [
+		'team',
+		'pyWins',
+		'pyLosses',
+		'pyPct',
+		'wins',
+		'losses',
+		'pct',
+	];
 
 	public constructor(private standingsService: StandingsService) {}
 

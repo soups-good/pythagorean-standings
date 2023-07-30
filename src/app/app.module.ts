@@ -33,6 +33,9 @@ import { StandingsService } from './services/standings.service';
 	bootstrap: [StandingsPageComponent, HeaderComponent, FooterComponent],
 })
 export class AppModule {}
-// My goal is to throw a generic material header in, and then maybe do some ng templates with the data and the mat cards?
-// It'd be fun to have a toggle on each division's card that lets you switch between pythag and actual standings
-// Also want dark/light themes. Should be themed like mlb
+// TODOs left - add more data, maybe make a toggle to switch the pythag vs not pythag
+// Enable sorting? Stretch goal - MatTableDataSource
+// Text overflow?
+// I think the current responsive is fine, but the scrollbar would be nice
+// Frankly, I could deploy just this right now and see what happens
+// Google analytics!
