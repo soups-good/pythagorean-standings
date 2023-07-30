@@ -1,13 +1,12 @@
 <div class="container responsive-grid">
 	<mat-card *ngFor="let point of data">
 		<mat-card-header>
-			<mat-card-title> title </mat-card-title>
+			<mat-card-title> {{ point.division }} </mat-card-title>
 		</mat-card-header>
 		<br />
-		<!-- <img mat-card-image [src]="card.imageUrl" /> -->
-		<mat-card-content>
+		<mat-card-content *ngFor="let records of point.teamRecords">
 			<br />
-			<p>{{ this.data[0] }}</p>
+			<p>{{ records.team.name }}</p>
 		</mat-card-content>
 		<mat-card-actions>
 			<button mat-button>LIKE</button>
@@ -15,22 +14,3 @@
 		</mat-card-actions>
 	</mat-card>
 </div>
-
-<!-- <mat-card class="example-card">
-	<mat-card-header>
-		<mat-card-subtitle>Dog Breed</mat-card-subtitle>
-		<mat-card-title>Shiba Inu</mat-card-title>
-	</mat-card-header>
-	<mat-card-content>
-		<p>This card has divider and indeterminate progress as footer</p>
-		<p>Words</p>
-		<mat-divider></mat-divider>
-	</mat-card-content>
-	<mat-card-actions>
-		<button mat-button>LIKE</button>
-		<button mat-button>SHARE</button>
-	</mat-card-actions>
-	<mat-card-footer>
-		<mat-progress-bar mode="indeterminate"></mat-progress-bar>
-	</mat-card-footer>
-</mat-card> -->

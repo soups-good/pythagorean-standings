@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { StandingsService } from '../services/standings.service';
 import { take, tap } from 'rxjs';
-import { StandingsData, StandingsRecord } from '../models/standings-data.model';
+import { TeamRecord } from '../models/standings-data.model';
 
 @Component({
 	selector: 'app-standings-page',
@@ -9,7 +9,7 @@ import { StandingsData, StandingsRecord } from '../models/standings-data.model';
 	styleUrls: ['./standings-page.component.scss'],
 })
 export class StandingsPageComponent implements OnInit {
-	data: string[] = [];
+	data: { division: string; teamRecords: TeamRecord[] }[] = [];
 
 	public constructor(private standingsService: StandingsService) {}
 
@@ -18,11 +18,25 @@ export class StandingsPageComponent implements OnInit {
 			.getStandingsByDivision()
 			.pipe(
 				tap(standings => {
-					console.log(standings);
+					this.data = Object.entries(standings).reduce(
+						(
+							acc: {
+								division: string;
+								teamRecords: TeamRecord[];
+							}[],
+							[key, value]
+						) => {
+							acc.push({
+								division: key,
+								teamRecords: value,
+							});
+							return acc;
+						},
+						[]
+					);
 				}),
 				take(1)
 			)
 			.subscribe();
-		this.data.push('');
 	}
 }

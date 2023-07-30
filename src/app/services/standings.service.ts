@@ -1,10 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {
-	StandingsData,
-	StandingsRecord,
-	TeamRecord,
-} from '../models/standings-data.model';
+import { StandingsData, TeamRecord } from '../models/standings-data.model';
 import { Observable, combineLatest, map } from 'rxjs';
 import { divisionMap } from '../models/division-map.const';
 
@@ -34,13 +30,12 @@ export class StandingsService {
 		);
 	}
 
-	// public getStandingsByDivision(): Observable<Record<string, TeamRecord>> {
-	public getStandingsByDivision(): Observable<any> {
+	public getStandingsByDivision(): Observable<Record<string, TeamRecord[]>> {
 		return this.getStandings().pipe(
 			map(standings => {
 				const test = standings.records.reduce((topAcc, topCurr) => {
 					const insideReduce = topCurr.teamRecords.reduce(
-						(acc: Record<string, string[]>, curr) => {
+						(acc: Record<string, TeamRecord[]>, curr) => {
 							if (
 								!Array.isArray(
 									acc[divisionMap[topCurr.division.id]]
@@ -49,10 +44,7 @@ export class StandingsService {
 								acc[divisionMap[topCurr.division.id]] = [];
 							}
 
-							// TODO - add all the data we need here
-							acc[divisionMap[topCurr.division.id]].push(
-								curr.team.name
-							);
+							acc[divisionMap[topCurr.division.id]].push(curr);
 							return acc;
 						},
 						{}
